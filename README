@@ -14,8 +14,8 @@ git clone https://github.com/Taras-1337/instost.git
 cd instost
 ./build.sh
 ```
-Then run insurgency game (Until menu or druing a game).
-And inject (`sudo` required)...
+Then run insurgency.
+And inject (`sudo` required) while in menu or in game...
 ``` sh
 ./inject.sh load
 ```
@@ -44,7 +44,7 @@ o ESP Tracers.
 o Try to add AIM.
 
 
-CREDIS
+CREDITS
 ======
 flint201 [InsTux](https://github.com/flint201/InsTux)
 Mashpoe  [c-vetor](https://github.com/Mashpoe/c-vector)

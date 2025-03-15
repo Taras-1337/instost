@@ -1,0 +1,50 @@
+
+            I N S   T O S T
+       Internal Insurgency Zrada
+       
+ https://github.com/Taras-1337/instost
+   !!! Educational Purposes Only !!!
+
+
+BUILD AND RUN
+=============
+Clone and compile first.
+```sh
+git clone https://github.com/Taras-1337/instost.git
+cd instost
+./build.sh
+```
+Then run insurgency game (Until menu or druing a game).
+And inject (`sudo` required)...
+``` sh
+./inject.sh load
+```
+
+
+MODULES
+=======
+o  Hud
+   - Crosshair
+   - HP/AMMO
+o  Radar (WIP)
+o  NoFlash
+o  ESP
+   - Nickname
+   - Skeleton
+   - WeaponName
+   - Health
+   - Range
+
+
+TODO
+====
+o Setup custom font.
+o Fix radar.
+o ESP Tracers.
+o Try to add AIM.
+
+
+CREDIS
+======
+flint201 [https://github.com/flint201/InsTux](InsTux)
+Mashpoe [https://github.com/Mashpoe/c-vector](c-vetor)

@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(instost
-        VERSION      0.5.0
+        VERSION      0.6.0
         DESCRIPTION "Insurgency internal toster"
         LANGUAGES   C
 )

@@ -23,15 +23,16 @@ struct ray_t
     vector3_aligned m_StartOffset;
     vector3_aligned m_Extents;
 
+    uint32_t pizdos; // TOTAL ALIGN ZRADA (In c++ it's uneeded)
     const struct matrix3x4_t *m_pWorldAxisTransform;
 
     bool m_IsRay;
     bool m_IsSwept;
-
 };
 
 struct trace_filter
 {
+    void **vtable;
     void *p_skip;
     void *p_skip2;
 };
@@ -84,7 +85,7 @@ struct ray_t
 rayt_init(vector3 start, vector3 end);
 
 void
-trace_ray(void *self, const struct ray_t *ray, unsigned int mask, struct trace_filter *filter, struct trace_t *trace);
+trace_ray(void *self, struct ray_t *ray, unsigned int mask, struct trace_filter *filter, struct trace_t *trace);
 
 bool
 send_ray(void *local_player, void *player, vector3 start, vector3 end);

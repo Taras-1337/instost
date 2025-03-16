@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "../interfaces.h"
+#include <stdio.h>
 
 hfont font;
 
@@ -73,6 +74,19 @@ hfont
 create_font(void *self)
 {
     typedef int (*vfn)(void *);
+    /*
+      80 - always 0
+      78 - always 0
+      76 - always 0
+      75 - always 15
+      74 - always 127
+      71 - 449++
+      69 - always 0
+      68 - the same random num
+      67 - the same random num
+      66 - the same random num (same as 67)
+      64 - the same random num
+    */
     vfn vfunc = (vfn) getvfunc(self, 71, 0);
     return vfunc(self);
 }
@@ -88,7 +102,7 @@ set_font_glyphset(void       *self,
                   int         flags)
 {
     typedef void (*vfn)(void *, hfont, const char *, int, int, int, int, int, int, int);
-    vfn vfunc = (vfn) getvfunc(self, 72, 0); // 71 initial > 72 moved (crashes) / 74 calls every second, etc...
+    vfn vfunc = (vfn) getvfunc(self, 73, 0); // 71 initial > 72 moved (crashes) / 74 calls every second, etc...
     vfunc(self, f, font_name, tall, weight, blur, scanlines, flags, 0, 0);
 }
 
@@ -96,6 +110,8 @@ void
 setup_font(const char *font_name, int size, int flags)
 {
     font = create_font(surface);
-    set_font_glyphset(surface, font, font_name, size, 0, 0, 0, flags);
+    // set_font_glyphset(surface, font, font_name, size, 450, 0, 0, flags);
     se_msg("Font ID: %lld\n", font);
+    printf("Font ID: %lld\n", font);
+    fflush(stdout);
 }

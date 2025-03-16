@@ -1,11 +1,14 @@
 #include "esp.h"
 
+#include <stdio.h>
 #include <string.h>
 #include <strings.h>
+#include <stddef.h>
 #include <wchar.h>
 
 #include "../SDK/IVModelInfo.h"
 #include "../SDK/IEngineVGui.h"
+#include "../SDK/IEngineTrace.h"
 #include "../SDK/IVDebugOverlay.h"
 #include "../SDK/IEngineClient.h"
 #include "../SDK/IClientEntity.h"
@@ -15,7 +18,7 @@
 #include "../vmt.h"
 
 void
-draw_skeleton(void *player, int r, int g, int b);
+draw_skeleton(void *player, void *local_player, bool dormant, bool same_team);
 
 void
 hk_esp(void *local_player)
@@ -36,13 +39,7 @@ hk_esp(void *local_player)
             continue;
         }
 
-        if (dormant) {
-            draw_skeleton(player, 71, 71, 71);
-        } else if (same_team) {
-            draw_skeleton(player, 0, 183, 255);
-        } else {
-            draw_skeleton(player, 255, 0, 0);
-        }
+        draw_skeleton(player, local_player, dormant, same_team);
 
         struct player_info_s pinfo;
         if (!get_player_info(engine, i, &pinfo)) {
@@ -106,7 +103,7 @@ hk_esp(void *local_player)
 }
 
 void
-draw_skeleton(void *player, int r, int g, int b)
+draw_skeleton(void *player, void *local_player, bool dormant, bool same_team)
 {
     void *mdl = get_model(player);
     if (!mdl) {
@@ -144,21 +141,27 @@ draw_skeleton(void *player, int r, int g, int b)
                 continue;
             }
 
-            /*
-            vector3 dbone;
-            dbone.x = bone_matrix[i].mat_val[0][3] + bone_matrix[p_bone->parent].mat_val[0][3];
-            dbone.y = bone_matrix[i].mat_val[1][3] + bone_matrix[p_bone->parent].mat_val[1][3];
-            dbone.z = bone_matrix[i].mat_val[2][3] + bone_matrix[p_bone->parent].mat_val[2][3];
-
-            vector3 eye_pos = get_pos_eye(local_player);
-            if (send_ray(local_player, player, eye_pos, dbone)) {
-                draw_set_color(surface, 0, 255, 0, 255);
+            if (dormant) {
+                draw_set_color(surface, 71, 71, 71, 255);
+                draw_line(surface, spos1.x, spos1.y, spos2.x, spos2.y);
+            } else if (same_team) {
+                draw_set_color(surface, 0, 183, 255, 255);
+                draw_line(surface, spos1.x, spos1.y, spos2.x, spos2.y);
             } else {
-                draw_set_color(surface, 255, 0, 0, 255);
-            }*/
+                vector3 dbone;
+                dbone.x = bone_matrix[i].mat_val[0][3] + bone_matrix[i].mat_val[0][0] * 8;
+                dbone.y = bone_matrix[i].mat_val[1][3] + bone_matrix[i].mat_val[1][0] * 8;
+                dbone.z = bone_matrix[i].mat_val[2][3] + bone_matrix[i].mat_val[2][0] * 8;
 
-            draw_set_color(surface, r, g, b, 255);
-            draw_line(surface, spos1.x, spos1.y, spos2.x, spos2.y);
+                vector3 eye_pos = get_pos_eye(local_player);
+                if (send_ray(local_player, player, eye_pos, dbone)) {
+                    draw_set_color(surface, 0, 255, 0, 255);
+                    draw_line(surface, spos1.x, spos1.y, spos2.x, spos2.y);
+                } else {
+                    draw_set_color(surface, 255, 0, 0, 255);
+                    draw_line(surface, spos1.x, spos1.y, spos2.x, spos2.y);
+                }
+            }
         }
     }
 }

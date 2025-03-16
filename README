@@ -6,6 +6,7 @@
            !!! Educational Purposes Only !!!
 
 
+
 BUILD AND RUN
 =============
 Clone and compile first.
@@ -31,6 +32,7 @@ o  NoFlash
 o  ESP
    - Nickname
    - Skeleton
+     - Change color if visible
    - WeaponName
    - Health
    - Range
@@ -42,6 +44,16 @@ o Setup custom font.
 o Fix radar.
 o ESP Tracers.
 o Try to add AIM.
+o Check if `-1` ammo for `is_grenade()`
+
+
+CHANGELOG
+=========
+o 0.5.0
+  - initial verison
+o 0.6.0
+  - More explosives for `is_grenade()`
+  - Add visibility check for DrawSkeleton
 
 
 CREDITS

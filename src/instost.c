@@ -14,7 +14,7 @@ instost_in(void)
     se_msg("instost_in_start\n");
 
     /* TODO: Setup font */
-    // setup_font("Arial", 12, 0);
+    // setup_font("Arial", 22, 0);
     font = 11; // 11
 
     /* Dump offsets from Netvars */

@@ -154,6 +154,15 @@ draw_skeleton(void *player, void *local_player, bool dormant, bool same_team)
                 dbone.z = bone_matrix[i].mat_val[2][3] + bone_matrix[i].mat_val[2][0] * 8;
 
                 vector3 eye_pos = get_pos_eye(local_player);
+                static struct matrix3x4_t local_bone_matrix[128];
+                if (setup_bones(local_player, local_bone_matrix, 128, 0x100, 0)){
+                    eye_pos.x = local_bone_matrix[21].mat_val[0][3];
+                    eye_pos.y = local_bone_matrix[21].mat_val[1][3];
+                    eye_pos.z = local_bone_matrix[21].mat_val[2][3];
+                } else {
+                    eye_pos = get_pos_eye(local_player);
+                }
+
                 if (send_ray(local_player, player, eye_pos, dbone)) {
                     draw_set_color(surface, 0, 255, 0, 255);
                     draw_line(surface, spos1.x, spos1.y, spos2.x, spos2.y);

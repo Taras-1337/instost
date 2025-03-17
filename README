@@ -32,7 +32,7 @@ o  NoFlash
 o  ESP
    - Nickname
    - Skeleton
-     - Change color if visible
+     - Change bone color if it's visible
    - WeaponName
    - Health
    - Range
@@ -54,6 +54,8 @@ o 0.5.0
 o 0.6.0
   - More explosives for `is_grenade()`
   - Add visibility check for DrawSkeleton
+o 0.6.1
+  - Changed EyePos to HeadBone in TraceRay
 
 
 CREDITS

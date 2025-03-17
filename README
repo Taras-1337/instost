@@ -44,7 +44,6 @@ o Setup custom font.
 o Fix radar.
 o ESP Tracers.
 o Try to add AIM.
-o Check if `-1` ammo for `is_grenade()`
 
 
 CHANGELOG

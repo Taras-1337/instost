@@ -84,7 +84,7 @@ hk_esp(void *local_player)
                     if (strncmp(weapname, "weapon_", 7) == 0) {
                         weapname += 7;
                     }
-                    if (is_grenade(weapname)) {
+                    if (is_grenade(weapname) || get_ammo(enemyweapon) == -1) {
                         draw_set_text_color(surface, 255, 0, 0, 255);
                     } else if (/*enemyweapon->GetInReload() TODO: Looks like it doesn't even work*/ false) {
                         draw_set_text_color(surface, 130, 130, 130, 255);

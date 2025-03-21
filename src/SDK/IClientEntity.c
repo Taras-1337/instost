@@ -51,6 +51,30 @@ get_weapon_name(void *self)
     return vfunc(self);
 }
 
+int
+get_fire_mode(void *self)
+{
+    return *(int *)(((uintptr_t) self) + offsets.DT_BaseCombatWeapon.m_iActiveFiremode);
+}
+
+unsigned *
+GetINSFlags(void *self)
+{
+    return (unsigned *)(((uintptr_t) self) + offsets.DT_INSPlayer.m_iPlayerFlags);
+}
+
+bool
+is_scoped(void *self)
+{
+    return (bool) (*(GetINSFlags(self)) & 1);
+}
+
+bool
+IsSprinting(void *self)
+{
+    return (bool) (*(GetINSFlags(self)) & 4);
+}
+
 bool
 is_dormant(void *self)
 {
@@ -71,6 +95,11 @@ get_pos_origin(void *self)
     return *(vector3 *)(((uintptr_t) self) + offsets.DT_BaseEntity.m_vecOrigin);
 }
 
+vector3
+get_aim_punch_angle(void *self)
+{
+    return *(vector3 *)(((uintptr_t) self) + offsets.DT_BasePlayer.m_aimPunchAngle);
+}
 
 vector3
 get_vec_view_offset(void *self)

@@ -16,6 +16,37 @@ enum team_id
     TEAM_COUNTER_TERRORIST,
 };
 
+enum ebone {
+    EBONE_INVALID = -1,
+
+    EBONE_PELVIS = 0,
+    EBONE_SPINE_0 = 1,
+    EBONE_SPINE_1 = 2,
+    EBONE_SPINE_2 = 3,
+    EBONE_SPINE_3 = 4, // center mass
+    EBONE_SPINE_4 = 5,
+    EBONE_NECK = 6,
+    EBONE_HEAD = 21, //
+
+    EBONE_HAND_L = 10,
+    EBONE_ELBOW_L = 9, //
+    EBONE_SHOULDER_L = 8,
+    EBONE_COLLAR_L = 7,
+
+    EBONE_HAND_R = 14,
+    EBONE_ELBOW_R = 13, //
+    EBONE_SHOULDER_R = 12,
+    EBONE_COLLAR_R = 11,
+
+    EBONE_FOOT_L = 20,
+    EBONE_KNEE_L = 19, //
+    EBONE_HIP_L = 18,
+
+    EBONE_FOOT_R = 17,
+    EBONE_KNEE_R = 16, //
+    EBONE_HIP_R = 15
+};
+
 float *
 get_flash_max_alpha(void *self);
 
@@ -45,6 +76,21 @@ get_team_num(void *self);
 
 vector3
 get_pos_origin(void *self);
+
+int
+get_fire_mode(void *self);
+
+unsigned *
+GetINSFlags(void *self);
+
+bool
+is_scoped(void *self);
+
+bool
+IsSprinting(void *self);
+
+vector3
+get_aim_punch_angle(void *self);
 
 vector3
 get_vec_view_offset(void *self);

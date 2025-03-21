@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/select.h>
 
 #include "hacks/esp.h"
 #include "hacks/radar.h"
@@ -19,6 +18,7 @@
 
 wchar_t *wbuffer;
 vmt_hook engine_vgui_vmt;
+vmt_hook client_mode_vmt;
 
 void
 vmt_ini(vmt_hook *vmt, void *interface);
@@ -33,7 +33,10 @@ void
 vmt_hook_restore(vmt_hook *vmt);
 
 void
-hook_paint(void *this, enum paintmode mode);
+hook_paint(void *self, enum paintmode mode);
+
+bool
+hook_create_move(void *self, float flInputSampleTime, struct CUserCmd *cmd);
 
 void
 init_hooks()
@@ -43,12 +46,19 @@ init_hooks()
     vmt_ini(&engine_vgui_vmt, engine_vgui);
     vmt_hook_method(&engine_vgui_vmt, (void *) hook_paint, PAINT_IDX);
     vmt_hook_apply(&engine_vgui_vmt);
+
+    /*
+    vmt_ini(&client_mode_vmt, client_mode);
+    vmt_hook_method(&client_mode_vmt, (void *) hook_create_move, CREATE_MOVE_IDX);
+    vmt_hook_apply(&client_mode_vmt);
+    */
 }
 
 void
 cleanup_hooks()
 {
     vmt_hook_restore(&engine_vgui_vmt);
+    vmt_hook_restore(&client_mode_vmt);
     if (wbuffer) {
         free(wbuffer);
     }
@@ -84,15 +94,15 @@ void
 vmt_hook_restore(vmt_hook *vmt)
 {
     *vmt->interface = vmt->original_vmt;
-    free(vmt->vmt); // TODO: Is free() call needed?
+    free(vmt->vmt);
 }
 
 void
-hook_paint(void *this, enum paintmode mode)
+hook_paint(void *self, enum paintmode mode)
 {
     int width, height;
 
-    ((void (*)(void *, enum paintmode)) engine_vgui_vmt.original_vmt[PAINT_IDX])(this, mode);
+    ((void (*)(void *, enum paintmode)) engine_vgui_vmt.original_vmt[PAINT_IDX])(self, mode);
 
     if (is_taking_screenshot(engine)) {
         se_msg("PIZDOS SCREENER");
@@ -113,4 +123,17 @@ hook_paint(void *this, enum paintmode mode)
             return;
         }
     }
+}
+
+bool
+hook_create_move(void *self, float flInputSampleTime, struct CUserCmd *cmd)
+{
+    ((bool (*)(void *, float, struct CUserCmd *)) client_mode_vmt.original_vmt[CREATE_MOVE_IDX])(self, flInputSampleTime, cmd);
+
+    if (cmd && cmd->command_number) {
+        void *local_player = get_client_entity(entity_list, get_local_player(engine));
+        // hk_ambt(local_player, cmd);
+    }
+
+    return false;
 }

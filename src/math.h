@@ -39,3 +39,18 @@ vector3_distance(vector3 vec1, vector3 vec2);
 
 float
 to_radian(float degree);
+
+vector3
+calc_angle(vector3 src, vector3 dst);
+
+void
+normalize_angles(vector3 *angle);
+
+void
+clamp_angles(vector3 *angle);
+
+vector3
+delta_angles(const vector3 *start, const vector3 *end);
+
+float
+get_fov(const vector3 *viewAngle, const vector3 *aimAngle);
